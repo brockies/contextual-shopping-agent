@@ -1,0 +1,20 @@
+# Contextual Shopping Agent (POC)
+
+Medusa + SvelteKit + Go Agent + pgvector
+
+Goal:
+Edge-style contextual shopping assistant enforcing:
+- Budget constraints
+- Sustainability threshold
+
+Architecture:
+- frontend (SvelteKit)
+- agent (Go API)
+- postgres (pgvector)
+- medusa (catalog backend)
+
+MVP Scope:
+- Detect incomplete outfit mission
+- Recommend missing slots
+- Enforce eco_score + budget
+
