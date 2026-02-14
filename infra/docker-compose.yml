@@ -1,0 +1,16 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: csa-db
+    environment:
+      POSTGRES_USER: csa
+      POSTGRES_PASSWORD: csa
+      POSTGRES_DB: csa
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ../db/init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+
+volumes:
+  db_data:
