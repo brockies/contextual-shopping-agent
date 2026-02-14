@@ -1,0 +1,15 @@
+# Node
+node_modules/
+.build/
+.svelte-kit/
+
+# Go
+/bin/
+vendor/
+
+# Env
+.env
+
+# OS
+.DS_Store
+
