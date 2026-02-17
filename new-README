@@ -1,0 +1,156 @@
+Contextual Shopping Agent (POC)
+
+Edge-aware AI shopping assistant that autonomously completes incomplete shopping missions using semantic retrieval + structured constraints.
+
+🎯 Problem
+
+Traditional AI shopping assistants:
+
+Recommend products
+
+Provide chat-based suggestions
+
+They do not autonomously complete incomplete baskets while respecting:
+
+Budget constraints
+
+Sustainability thresholds
+
+Category/slot requirements
+
+💡 Solution
+
+A constraint-aware shopping agent that:
+
+Detects missing outfit “slots” (e.g. bottom, shoes)
+
+Retrieves semantically relevant products
+
+Applies structured filters:
+
+Budget
+
+Eco score
+
+Category
+
+Returns optimized recommendations
+
+🏗 Architecture
+
+Medusa (Commerce)
+→ Admin API
+→ Indexer (Go)
+→ OpenAI Embeddings
+→ pgvector (Postgres)
+→ Constraint-aware Retrieval
+→ Outfit Completion Planner
+
+⚙ Components
+1️⃣ Medusa (Commerce Backend)
+
+Product source of truth
+
+Metadata:
+
+slot (top, bottom, shoes, outerwear)
+
+eco_score
+
+price_gbp
+
+2️⃣ Go Agent Service
+
+Endpoints:
+
+POST /index-medusa-products
+
+Fetches products from Medusa Admin API, generates embeddings, and stores in pgvector.
+
+POST /complete-outfit
+
+Input:
+
+{
+  "mission": "smart_casual",
+  "budget_gbp": 120,
+  "min_eco_score": 0,
+  "cart_slots": ["top"],
+  "limit_per_slot": 3
+}
+
+
+Output:
+
+Missing slots
+
+Ranked product recommendations per slot
+
+Constraint-compliant results
+
+3️⃣ Vector Search (pgvector)
+
+Embeddings stored as vector
+
+Similarity search using <->
+
+Combined with SQL filters:
+
+category
+
+price_gbp
+
+eco_score
+
+Hybrid retrieval:
+Semantic similarity + structured constraints
+
+🧠 What This Demonstrates
+
+AI indexing pipeline
+
+Embedding generation (OpenAI)
+
+Vector database integration
+
+Hybrid retrieval (semantic + SQL filters)
+
+Constraint-aware planning logic
+
+End-to-end AI-enabled commerce architecture
+
+🚀 Example Flow
+
+User has added a top.
+
+Agent detects missing: bottom + shoes.
+
+Budget split across slots.
+
+For each slot:
+
+Generate semantic query embedding.
+
+Search vector DB.
+
+Apply eco + price constraints.
+
+Return recommendations.
+
+🔐 Environment Variables
+DATABASE_URL=
+OPENAI_API_KEY=
+MEDUSA_BASE_URL=
+MEDUSA_SESSION_TOKEN=
+
+📌 Future Enhancements
+
+LLM-based reasoning layer (explanations)
+
+Real-time cart monitoring
+
+Redis caching layer
+
+Multi-objective optimization scoring
+
+Frontend (SvelteKit integration)
