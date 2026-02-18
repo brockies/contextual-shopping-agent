@@ -13,3 +13,4 @@ vendor/
 # OS
 .DS_Store
 
+medusa/static/
